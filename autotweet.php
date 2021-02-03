@@ -12,10 +12,10 @@ function randomTweet($tweets)
 }
 
 // API KEY TWITTER
-$consumer_key         = '##################################################';
-$consumer_secret      = '##################################################';
-$access_token         = '##################################################';
-$access_token_secret  = '##################################################';
+$consumer_key         = 'EFDWRfGtSinAeEtkvD012FWU3';
+$consumer_secret      = 'scjlmn45X6OyiIbnx5oOBi8xXO0PSWrsErxM2WGJbvZ8t2Qjzu';
+$access_token         = '32371799-O2YRKwaTTAdZ4QoVoi5Ov6JALlw85tFOusxEvuisj';
+$access_token_secret  = 'yxPdpQ1QtkerroYVkGEfzCT0FkKPCPSmgbrR6UDc3ZfZz';
 
 /**************************************************************************/
 /*                       Sell Account Twitter Dev                         */
