@@ -4,13 +4,6 @@ require 'vendor/autoload.php';
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-// Function Get Random Line
-function randomTweet($tweets)
-{
-  $lines = file($tweets);
-  return $lines[array_rand($lines)];
-}
-
 // API KEY TWITTER
 $consumer_key         = '##################################################';
 $consumer_secret      = '##################################################';
@@ -26,30 +19,31 @@ $access_token_secret  = '##################################################';
 /*   Created by Zacky Achmad | Powered by Zetbot Indonesia (zetbot.org)   */
 /**************************************************************************/
 
+// Config Auto Like
+$i = 1;
+$total_tweet = 3; // Tweet per Action
+
 // Connect to Account
 $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
 $connection->get('account/verify_credentials');
 
 if ($connection->getLastHttpCode() == 200) {
-  // Get Tweet from File
-  $tweet = randomTweet('list_tweet.txt');
+  // Get Tweet Status
+  $get_status = $connection->get('statuses/home_timeline', ['count' => $total_tweet]);
 
-  // Post Tweet
-  $connection->post('statuses/update', ['status' => $tweet]);
+  foreach ($get_status as $status) {
+    $id = $status->id;
 
-  // Tweet with Media
-  // $tweet = randomTweet('list_tweet.txt');
-  // $media = $connection->upload('media/upload', ['media' => 'zetbot.jpg']);
-  // $data = [
-  //   'status' => $tweet,
-  //   'media_ids' => $media->media_id_string
-  // ];
-  // $connection->post('statuses/update', $data);
+    // Like Tweet
+    $connection->post('favorites/create', ['id' => $id]);
 
-  if ($connection->getLastHttpCode() == 200) {
-    echo 'Successfully tweet | ' . $tweet;
-  } else {
-    echo 'Failed to create tweet!';
+    if ($connection->getLastHttpCode() == 200) {
+      echo $i . ' Successfully like ' . $id . '</br>';
+      $i++;
+    } else {
+      echo 'Failed to like to the tweet!';
+      break;
+    }
   }
 } else {
   echo 'Invalid API key!';
